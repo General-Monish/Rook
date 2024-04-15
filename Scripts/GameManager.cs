@@ -46,9 +46,22 @@ public class GameManager : MonoBehaviour
         Rook rook = obj.GetComponent<Rook>();
         positions[rook.GetXBoard(), rook.GetYBoard()]=obj;
     }
-    // Update is called once per frame
-    void Update()
+   
+    public void SetPositionEmpty(int x,int y)
     {
-        
+         positions[x,y] = null;
     }
+
+    public GameObject GetPosition(int x,int y)
+    {
+        return positions[x,y];
+    }
+
+    public bool PositionOnBoard(int x,int y)
+    {
+        if(x<0 || y<0 || x>=positions.GetLength(0) || y>=positions.GetLength(1)) return false;
+        return true;
+    }
+
+
 }

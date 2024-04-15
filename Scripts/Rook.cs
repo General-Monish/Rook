@@ -78,5 +78,68 @@ public class Rook : MonoBehaviour
         yBoard = y;
     }
 
-  
+    private void OnMouseUp()
+    {
+        DestroyMovePlates();
+
+        InitiateMovePlates();
+    }
+
+    public void DestroyMovePlates()
+    {
+        GameObject[] movePlates = GameObject.FindGameObjectsWithTag("MovePlate");
+        for(int i = 0; i < movePlates.Length; i++)
+        {
+            Destroy(movePlates[i]);
+        }
+    }
+
+    public void InitiateMovePlates()
+    {
+        switch (this.name)
+        {
+            case "black_rook":
+                LineMovePlate(1, 0);
+                LineMovePlate(0, 1);
+                LineMovePlate(-1, 0);
+                LineMovePlate(0, -1);
+                break;
+        }
+    }
+
+    public void LineMovePlate(int xIncreament, int yIncreament)
+    {
+        GameManager sc=gameManager.GetComponent<GameManager>();
+        int x=xBoard+xIncreament;
+        int y=yBoard+yIncreament;
+
+        while (sc.PositionOnBoard(x, y) && sc.GetPosition(x, y) == null)
+        {
+            MovePlateSpawn(x,y);
+            x += xIncreament;
+            y += yIncreament;
+        }
+
+        // Missed here but not imp
+
+    }
+
+    public void MovePlateSpawn(int matrixX,int matrixY)
+    {
+        float x= matrixX;
+        float y= matrixY;
+
+        x *= 0.66f;
+        y *= 0.66f;
+
+        x += -2.3f;
+        y += -2.3f;
+
+        // for setting up on the unity screen
+        GameObject mp=Instantiate(movePlate,new Vector3(x,y,-3.0f),Quaternion.identity);
+
+        MovePlate mpScript=mp.GetComponent<MovePlate>();
+        mpScript.SetReferance(gameObject);
+        mpScript.SetCor(matrixX,matrixY);
+    }
 }

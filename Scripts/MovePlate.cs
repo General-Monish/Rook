@@ -4,15 +4,58 @@ using UnityEngine;
 
 public class MovePlate : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject gameManager;
+
+    GameObject referance = null;
+
+    // Board Positions 
+    int matrixX;
+    int matrixY;
+
+    // false: movement , true: attack
+    public bool attack=false;
+
+    public void Start()
     {
-        
+        if(attack)
+        {
+
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnMouseUp()
     {
-        
+        gameManager = GameObject.FindGameObjectWithTag("GameController");
+
+        gameManager.GetComponent<GameManager>().SetPositionEmpty(referance.GetComponent<Rook>().GetXBoard(),
+            referance.GetComponent<Rook>().GetYBoard());
+
+        referance.GetComponent<Rook>().SetXBoard(matrixX);
+        referance.GetComponent<Rook>().SetYBoard(matrixY);
+        referance.GetComponent<Rook>().SetCordinates();
+
+        gameManager.GetComponent<GameManager>().SetPosition(referance);
+
+        referance.GetComponent<Rook>().DestroyMovePlates();
     }
+
+    public void SetCor(int x, int y)
+    {
+        matrixX = x;
+        matrixY = y;
+    }
+
+    public void SetReferance(GameObject obj)
+    {
+        referance = obj;
+    }
+
+    public GameObject GetReferance()
+    {
+        return referance;
+    }
+
+
+
+
 }
