@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class GameManager : MonoBehaviour
     public GameObject player1Panel;
     [SerializeField]
     public GameObject player2Panel;
+
+    [SerializeField]
+    private GameObject restartPanel;
 
     [SerializeField]
     private Timer timer; // Reference to the Timer script
@@ -28,6 +32,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        restartPanel.SetActive(false);
         winScreen.SetActive(false);
         instance = this;
         playerRook = new GameObject[]
@@ -92,6 +97,8 @@ public class GameManager : MonoBehaviour
             player2Panel.SetActive(false);
             winScreen.SetActive(true);
             Debug.Log("Rook has reached position (0, 0)!");
+            restartPanel.SetActive(true);
+
         }
     }
     public void SwitchPlayerTurn()
@@ -111,5 +118,10 @@ public class GameManager : MonoBehaviour
     public bool IsPlayer1Turn()
     {
         return player1Turn;
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene("Game");
     }
 }

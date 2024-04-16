@@ -38,7 +38,7 @@ public class Rook : MonoBehaviour
 
         switch (this.name)
         {
-            case "balck_rook": this.GetComponent<SpriteRenderer>().sprite = black_rook; break;
+            case "black_rook": this.GetComponent<SpriteRenderer>().sprite = black_rook; break;
         }
     }
 
@@ -48,14 +48,18 @@ public class Rook : MonoBehaviour
         float x = xBoard;
         float y = yBoard;
 
-        x *= .66f;
-        y *= .66f;
+        // Adjusting initial coordinates to spawn the rook slightly left
+        //x -= 0.1f;
+
+        x *= 0.66f;
+        y *= 0.66f;
 
         x += -2.3f;
         y += -2.3f;
 
-        this.transform.position=new Vector3(x, y, -1.0f);
+        this.transform.position = new Vector3(x, y, -1.0f);
     }
+
 
     public int GetXBoard()
     {
