@@ -28,18 +28,6 @@ public class Rook : MonoBehaviour
     [SerializeField]
     private Sprite black_rook;
 
-    /*   public void Activate()
-       {
-           gameManager = GameObject.FindGameObjectWithTag("GameController");
-
-           SetCordinates();
-
-           switch (this.name)
-           {
-               case "balck_rook": this.GetComponent<SpriteRenderer>().sprite=black_rook; break;
-           }
-       }*/
-
     public void Activate()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameController");
@@ -92,9 +80,14 @@ public class Rook : MonoBehaviour
     private void OnMouseUp()
     {
         DestroyMovePlates();
-
         InitiateMovePlates();
+
+        if (gameManager != null && GameManager.instance != null)
+        {
+            GameManager.instance.SwitchPlayerTurn();
+        }
     }
+
 
     public void DestroyMovePlates()
     {
@@ -104,19 +97,6 @@ public class Rook : MonoBehaviour
             Destroy(movePlates[i]);
         }
     }
-
-    /*    public void InitiateMovePlates()
-        {
-            switch (this.name)
-            {
-                case "black_rook":
-                    LineMovePlate(1, 0);
-                    LineMovePlate(0, 1);
-                    LineMovePlate(-1, 0);
-                    LineMovePlate(0, -1);
-                    break;
-            }
-        }*/
 
     public void InitiateMovePlates()
     {
