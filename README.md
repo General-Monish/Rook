@@ -1,4 +1,3 @@
-Rook Chess Game
 Rook Chess Game is a simple Unity project that implements a classic board game where players control rook pieces to reach a specific position on the board. The game features turn-based gameplay, player panels to indicate active player turns, and a timer to limit each player's turn. The objective of the game is to move the rook pieces strategically to reach a designated winning position on the board.
 
 Features
