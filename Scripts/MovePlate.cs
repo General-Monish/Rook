@@ -8,6 +8,8 @@ public class MovePlate : MonoBehaviour
 
     GameObject referance = null;
 
+    private int clickCount = 1;
+
     // Board Positions 
     int matrixX;
     int matrixY;
@@ -26,8 +28,29 @@ public class MovePlate : MonoBehaviour
         gameManager.GetComponent<GameManager>().SetPosition(referance);
 
         referance.GetComponent<Rook>().DestroyMovePlates();
+
+        clickCount++;
+
+        // On the second click
+        if (clickCount == 2)
+        {
+            // Switch players
+            if (GameManager.instance != null)
+            {
+                GameManager.instance.SwitchPlayerTurn();
+            }
+
+            // Reset click count
+            clickCount = 1;
+        }
     }
 
+
+
+    private void OnMouseDown()
+    {
+       
+    }
     public void SetCor(int x, int y)
     {
         matrixX = x;

@@ -15,6 +15,7 @@ public class Rook : MonoBehaviour
     [SerializeField]
     private GameObject winScreen;
 
+    private int clickCount = 0; // Variable to track the number of clicks
 
     // Positions on Board
     private int xBoard = -1;
@@ -80,17 +81,20 @@ public class Rook : MonoBehaviour
     {
         yBoard = y;
     }
-
+    
     private void OnMouseUp()
     {
-        DestroyMovePlates();
-        InitiateMovePlates();
+        clickCount++;
 
-        if (gameManager != null && GameManager.instance != null)
+        // Instantiate move plates on the first click
+        if (clickCount == 1)
         {
-            GameManager.instance.SwitchPlayerTurn();
+            // Generate move plates
+            InitiateMovePlates();
         }
+       
     }
+
 
 
     public void DestroyMovePlates()
@@ -100,6 +104,7 @@ public class Rook : MonoBehaviour
         {
             Destroy(movePlates[i]);
         }
+        clickCount = 0;
     }
 
     public void InitiateMovePlates()
