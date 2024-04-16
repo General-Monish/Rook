@@ -12,23 +12,12 @@ public class MovePlate : MonoBehaviour
     int matrixX;
     int matrixY;
 
-    // false: movement , true: attack
-    public bool attack=false;
-
-    public void Start()
-    {
-        if(attack)
-        {
-
-        }
-    }
-
     public void OnMouseUp()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameController");
 
         gameManager.GetComponent<GameManager>().SetPositionEmpty(referance.GetComponent<Rook>().GetXBoard(),
-            referance.GetComponent<Rook>().GetYBoard());
+        referance.GetComponent<Rook>().GetYBoard());
 
         referance.GetComponent<Rook>().SetXBoard(matrixX);
         referance.GetComponent<Rook>().SetYBoard(matrixY);
@@ -54,8 +43,4 @@ public class MovePlate : MonoBehaviour
     {
         return referance;
     }
-
-
-
-
 }

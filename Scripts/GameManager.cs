@@ -4,20 +4,25 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject ChessPiece;
+    public static GameManager instance;
+
+    public GameObject ChessPiece;
 
 
     // pos and chessPiee
-    private GameObject[,] positions = new GameObject[8, 8];
+    public GameObject[,] positions = new GameObject[8, 8];
     private GameObject[] playerRook=new GameObject[1];
 
-    private string currentPlayer = "Player1";
-
     private bool gameOver = false;
+
+    [SerializeField]
+    private GameObject winScreen;
+
     // Start is called before the first frame update
     void Start()
     {
+        winScreen.SetActive(false);
+        instance = this;
         playerRook = new GameObject[]
         {
             Create("black_rook",7,7)
@@ -29,7 +34,10 @@ public class GameManager : MonoBehaviour
             SetPosition(playerRook[i]);
         }
     }
-
+    private void Update()
+    {
+        CheckRookPosition();
+    }
     public GameObject Create(string name, int x, int y)
     {
         GameObject obj = Instantiate(ChessPiece,new Vector3(0,0,-1),Quaternion.identity);
@@ -63,5 +71,12 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-
+    public void CheckRookPosition()
+    {
+        if (GetPosition(0, 0) == playerRook[0])
+        {
+            winScreen.SetActive(true);
+            Debug.Log("Rook has reached position (0, 0)!");
+        }
+    }
 }

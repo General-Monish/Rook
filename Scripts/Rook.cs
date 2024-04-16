@@ -9,6 +9,13 @@ public class Rook : MonoBehaviour
     [SerializeField]
     private GameObject movePlate;
 
+    private int boardWidth;
+    private int boardHeight;
+
+    [SerializeField]
+    private GameObject winScreen;
+
+
     // Positions on Board
     private int xBoard = -1;
     private int yBoard = -1;
@@ -20,29 +27,33 @@ public class Rook : MonoBehaviour
     // player chess Piece Referance
     [SerializeField]
     private Sprite black_rook;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    /*   public void Activate()
+       {
+           gameManager = GameObject.FindGameObjectWithTag("GameController");
+
+           SetCordinates();
+
+           switch (this.name)
+           {
+               case "balck_rook": this.GetComponent<SpriteRenderer>().sprite=black_rook; break;
+           }
+       }*/
 
     public void Activate()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameController");
 
+        SetBoardDimensions(gameManager.GetComponent<GameManager>().positions.GetLength(0), gameManager.GetComponent<GameManager>().positions.GetLength(1));
+
         SetCordinates();
 
         switch (this.name)
         {
-            case "balck_rook": this.GetComponent<SpriteRenderer>().sprite=black_rook; break;
+            case "balck_rook": this.GetComponent<SpriteRenderer>().sprite = black_rook; break;
         }
     }
+
 
     public void SetCordinates()
     {
@@ -94,18 +105,78 @@ public class Rook : MonoBehaviour
         }
     }
 
+    /*    public void InitiateMovePlates()
+        {
+            switch (this.name)
+            {
+                case "black_rook":
+                    LineMovePlate(1, 0);
+                    LineMovePlate(0, 1);
+                    LineMovePlate(-1, 0);
+                    LineMovePlate(0, -1);
+                    break;
+            }
+        }*/
+
     public void InitiateMovePlates()
     {
-        switch (this.name)
+        // Clear any existing move plates
+        DestroyMovePlates();
+
+        // Generate move plates for moving left
+        for (int x = xBoard - 1; x >= 0; x--)
         {
-            case "black_rook":
-                LineMovePlate(1, 0);
-                LineMovePlate(0, 1);
-                LineMovePlate(-1, 0);
-                LineMovePlate(0, -1);
-                break;
+            if (CanMoveToPosition(x, yBoard))
+            {
+                MovePlateSpawn(x, yBoard);
+            }
+            else
+            {
+                break; // Stop generating move plates if there's an obstruction
+            }
+        }
+
+        // Generate move plates for moving down
+        for (int y = yBoard - 1; y >= 0; y--)
+        {
+            if (CanMoveToPosition(xBoard, y))
+            {
+                MovePlateSpawn(xBoard, y);
+            }
+            else
+            {
+                break; // Stop generating move plates if there's an obstruction
+            }
         }
     }
+
+    public void SetBoardDimensions(int width, int height)
+    {
+        boardWidth = width;
+        boardHeight = height;
+    }
+
+
+    private bool CanMoveToPosition(int x, int y)
+    {
+        // Check if the position is within the bounds of the board
+        if (x < 0 || x >= boardWidth || y < 0 || y >= boardHeight)
+        {
+            return false;
+        }
+
+        GameManager gm = gameManager.GetComponent<GameManager>();
+
+        // Check if there's no piece at the position
+        if (gm.GetPosition(x, y) != null)
+        {
+            return false;
+        }
+
+
+        return true;
+    }
+
 
     public void LineMovePlate(int xIncreament, int yIncreament)
     {
@@ -119,9 +190,6 @@ public class Rook : MonoBehaviour
             x += xIncreament;
             y += yIncreament;
         }
-
-        // Missed here but not imp
-
     }
 
     public void MovePlateSpawn(int matrixX,int matrixY)
@@ -142,4 +210,6 @@ public class Rook : MonoBehaviour
         mpScript.SetReferance(gameObject);
         mpScript.SetCor(matrixX,matrixY);
     }
+
+
 }
