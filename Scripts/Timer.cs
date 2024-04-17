@@ -13,8 +13,8 @@ public class Timer : MonoBehaviour
     [SerializeField]
     private GameObject gameOverPanel;
 
-    [SerializeField]
-    private float maxTimer = 10f;
+    [HideInInspector]
+    public float maxTimer = 10f;
 
     private Coroutine timerCoroutine;
 
@@ -38,6 +38,9 @@ public class Timer : MonoBehaviour
         }
 
         gameOverPanel.SetActive(true);
+        GameManager.instance.playbtn.SetActive(false);
+        GameManager.instance.howToPlayPanel.SetActive(false);
+        GameManager.instance.howToPlayBtn.SetActive(false);
         GameManager.instance.player1Panel.SetActive(false);
         GameManager.instance.player2Panel.SetActive(false);
         clock.SetActive(false);

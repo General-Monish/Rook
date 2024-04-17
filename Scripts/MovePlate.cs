@@ -16,6 +16,7 @@ public class MovePlate : MonoBehaviour
 
     public void OnMouseUp()
     {
+
         gameManager = GameObject.FindGameObjectWithTag("GameController");
 
         gameManager.GetComponent<GameManager>().SetPositionEmpty(referance.GetComponent<Rook>().GetXBoard(),

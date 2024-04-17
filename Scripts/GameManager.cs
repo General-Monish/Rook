@@ -18,6 +18,15 @@ public class GameManager : MonoBehaviour
     private GameObject restartPanel;
 
     [SerializeField]
+    public GameObject howToPlayPanel;
+    public GameObject howToPlayBtn;
+
+    [SerializeField]
+    public GameObject playbtn;
+
+
+
+    [SerializeField]
     private Timer timer; // Reference to the Timer script
 
     // pos and chessPiee
@@ -32,6 +41,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        howToPlayBtn.SetActive(true);
+        playbtn.SetActive(false);
+        howToPlayPanel.SetActive(false);
         restartPanel.SetActive(false);
         winScreen.SetActive(false);
         instance = this;
@@ -98,6 +110,7 @@ public class GameManager : MonoBehaviour
             winScreen.SetActive(true);
             Debug.Log("Rook has reached position (0, 0)!");
             restartPanel.SetActive(true);
+            howToPlayBtn.SetActive(false);
 
         }
     }
@@ -124,4 +137,19 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("Game");
     }
+
+    public void Play()
+    {
+        playbtn.SetActive(false);
+        howToPlayPanel.SetActive(false);
+        SceneManager.LoadScene("Game");
+    }
+
+    public void HowToPlay()
+    {
+        timer.maxTimer = 20;
+        playbtn.SetActive(true);
+        howToPlayPanel.SetActive(true);
+    }
+
 }
